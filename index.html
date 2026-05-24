@@ -112,6 +112,7 @@
                                 <button onclick="selectPlatform('mac')" class="platform-btn border-2 border-gray-300 rounded-lg p-3 hover:border-purple-500 transition" data-platform="mac">
                                     <div class="text-2xl mb-1">🍎</div>
                                     <div class="text-xs font-medium">Mac</div>
+                                    <div class="text-xs text-gray-500">Prochainement</div>
                                 </button>
                                 <button onclick="selectPlatform('linux')" class="platform-btn border-2 border-gray-300 rounded-lg p-3 hover:border-purple-500 transition" data-platform="linux">
                                     <div class="text-2xl mb-1">🐧</div>
@@ -120,6 +121,7 @@
                                 <button onclick="selectPlatform('android')" class="platform-btn border-2 border-gray-300 rounded-lg p-3 hover:border-purple-500 transition" data-platform="android">
                                     <div class="text-2xl mb-1">🤖</div>
                                     <div class="text-xs font-medium">Android</div>
+                                    <div class="text-xs text-gray-500">Prochainement</div>
                                 </button>
                             </div>
                         </div>
@@ -225,6 +227,7 @@
                                 <button onclick="selectPlatformInfox('mac')" class="platform-btn-infox border-2 border-gray-300 rounded-lg p-3 hover:border-blue-500 transition" data-platform="mac">
                                     <div class="text-2xl mb-1">🍎</div>
                                     <div class="text-xs font-medium">Mac</div>
+                                    <div class="text-xs text-gray-500">Prochainement</div>
                                 </button>
                                 <button onclick="selectPlatformInfox('linux')" class="platform-btn-infox border-2 border-gray-300 rounded-lg p-3 hover:border-blue-500 transition" data-platform="linux">
                                     <div class="text-2xl mb-1">🐧</div>
@@ -233,6 +236,7 @@
                                 <button onclick="selectPlatformInfox('android')" class="platform-btn-infox border-2 border-gray-300 rounded-lg p-3 hover:border-blue-500 transition" data-platform="android">
                                     <div class="text-2xl mb-1">🤖</div>
                                     <div class="text-xs font-medium">Android</div>
+                                    <div class="text-xs text-gray-500">Prochainement</div>
                                 </button>
                             </div>
                         </div>
@@ -250,16 +254,24 @@
     <section class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-gray-900 mb-8">Crédits</h2>
-            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <div class="text-4xl mb-4">👨‍💻</div>
                     <h3 class="text-xl font-bold text-gray-900 mb-2">Développement</h3>
-                    <p class="text-gray-600">Conception et développement des applications</p>
+                    <p class="text-gray-600">Leo</p>
+                    <p class="text-gray-500 text-sm mt-2">Conception et développement des applications MyTracks et Tracks Infox</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <div class="text-4xl mb-4">🎨</div>
                     <h3 class="text-xl font-bold text-gray-900 mb-2">Design</h3>
-                    <p class="text-gray-600">Interface utilisateur et expérience</p>
+                    <p class="text-gray-600">Leo</p>
+                    <p class="text-gray-500 text-sm mt-2">Interface utilisateur et expérience</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-4xl mb-4">📱</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Applications</h3>
+                    <p class="text-gray-600">MyTracks & Tracks Infox</p>
+                    <p class="text-gray-500 text-sm mt-2">Gestion de musique et analyse de pistes</p>
                 </div>
             </div>
         </div>
@@ -289,7 +301,7 @@
                     </div>
                 </div>
                 <div class="text-gray-400 text-sm">
-                    © 2024 MyApps. Tous droits réservés.
+                    © 2026 MyApps. Tous droits réservés.
                 </div>
             </div>
         </div>
@@ -443,36 +455,22 @@
                 return;
             }
             
-            const promoCode = document.getElementById('promo-code').value;
-            const productId = getProductId('mytracks', selectedPlatform);
-            
-            try {
-                const response = await fetch('/api/create-payment-intent', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ product_id: productId, promo_code: promoCode })
-                });
-                const data = await response.json();
-                
-                if (data.error) {
-                    alert('Erreur: ' + data.error);
-                    return;
-                }
-                
-                currentPaymentIntent = data.clientSecret;
-                
-                // Redirect to Stripe Checkout (simplified version)
-                // In production, you would use Stripe Elements or Checkout
-                alert(`Redirection vers le paiement pour MyTracks sur ${selectedPlatform}...\nMontant: ${data.amount / 100} €`);
-                
-                // Pour une vraie intégration, vous utiliseriez:
-                // const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
-                //     payment_method: { card: cardElement }
-                // });
-                
-            } catch (error) {
-                alert('Erreur lors de la création du paiement');
+            if (selectedPlatform === 'mac' || selectedPlatform === 'android') {
+                alert('Cette plateforme sera bientôt disponible !');
+                return;
             }
+            
+            const promoCode = document.getElementById('promo-code').value;
+            
+            // Simulation du paiement (en mode local)
+            alert('Paiement simulé - Téléchargement en cours...');
+            
+            // Téléchargement direct pour le moment
+            const downloadUrls = {
+                'windows': '/downloads/MyTracks-Portable.exe',
+                'linux': '/downloads/MyTracks-Linux.zip'
+            };
+            window.location.href = downloadUrls[selectedPlatform];
         }
         
         function getProductId(app, platform) {
@@ -499,12 +497,16 @@
                 alert('Veuillez sélectionner une plateforme');
                 return;
             }
+            
+            if (selectedPlatformInfox === 'mac' || selectedPlatformInfox === 'android') {
+                alert('Cette plateforme sera bientôt disponible !');
+                return;
+            }
+            
             // Téléchargement direct pour l'app gratuite
             const downloadUrls = {
                 'windows': '/downloads/TracksInfox-Windows.exe',
-                'mac': '/downloads/TracksInfox-Mac.dmg',
-                'linux': '/downloads/TracksInfox-Linux.AppImage',
-                'android': '/downloads/TracksInfox-Android.apk'
+                'linux': '/downloads/TracksInfox-Linux.zip'
             };
             window.location.href = downloadUrls[selectedPlatformInfox];
         }
