@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
+app.use('/downloads', express.static(path.join(__dirname, 'downloads')));
 
 // Database setup
 const db = new sqlite3.Database('./database.sqlite');

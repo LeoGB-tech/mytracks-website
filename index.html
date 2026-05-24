@@ -462,10 +462,7 @@
             
             const promoCode = document.getElementById('promo-code').value;
             
-            // Simulation du paiement (en mode local)
-            alert('Paiement simulé - Téléchargement en cours...');
-            
-            // Téléchargement direct pour le moment
+            // Téléchargement direct (gratuit pendant la promo)
             const downloadUrls = {
                 'windows': '/downloads/MyTracks-Portable.exe',
                 'linux': '/downloads/MyTracks-Linux.zip'
@@ -523,22 +520,13 @@
         
         async function adminLogin() {
             const password = document.getElementById('admin-password').value;
-            try {
-                const response = await fetch('/api/admin/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    document.getElementById('admin-login').classList.add('hidden');
-                    document.getElementById('admin-dashboard').classList.remove('hidden');
-                    loadPromoCodes();
-                } else {
-                    alert('Mot de passe incorrect');
-                }
-            } catch (error) {
-                alert('Erreur de connexion');
+            // Mot de passe hardcoded pour le moment (24092017)
+            if (password === '24092017') {
+                document.getElementById('admin-login').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                alert('Connexion admin réussie !');
+            } else {
+                alert('Mot de passe incorrect');
             }
         }
         
